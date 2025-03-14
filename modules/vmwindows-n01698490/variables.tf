@@ -3,7 +3,7 @@ variable "vm_count" {
 }
 
 variable "humber_id" {
-  default = "n	01698490"
+  default = "n01698490"
 }
 
 variable "resource_group_name" {
