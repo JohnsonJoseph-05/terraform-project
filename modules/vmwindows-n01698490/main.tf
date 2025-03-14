@@ -69,9 +69,9 @@ resource "azurerm_windows_virtual_machine" "windows_vm" {
   }
   tags = var.tags
   
-  lifecycle {
-  prevent_destroy = true
-  }
+  #lifecycle {
+  #prevent_destroy = true
+  #}
 }
 
 
