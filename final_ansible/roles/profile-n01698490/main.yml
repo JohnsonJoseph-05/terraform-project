@@ -1,0 +1,7 @@
+- name: Set timezone to UTC
+  timezone:
+    name: UTC
+
+- name: Set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"

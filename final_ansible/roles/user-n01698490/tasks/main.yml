@@ -1,0 +1,28 @@
+- name: Create group "{{ cloud_group }}"
+  group:
+    name: "{{ cloud_group }}"
+    state: present
+
+- name: Create user accounts and add to groups
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+    groups: "{{ cloud_group }},wheel"
+    append: yes
+    state: present
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: ".ssh/id_rsa"
+  loop: "{{ user_list }}"
+
+- name: Output path of generated private key for user100
+  debug:
+    msg: "/home/user100/.ssh/id_rsa"
+
+- name: Fetch user100 private key from remote to local
+  fetch:
+    src: "/home/user100/.ssh/id_rsa"
+    dest: "{{ playbook_dir }}/user100_id_rsa"
+    flat: yes
+  when: inventory_hostname == 'n01698490-c-vm1.canadacentral.cloudapp.azure.com'
+

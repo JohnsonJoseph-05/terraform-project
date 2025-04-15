@@ -1,0 +1,12 @@
+data_disk_device: /dev/sdc
+partitions:
+  - name: part1
+    number: 1
+    size: 4096  # in MB
+    fstype: xfs
+    mount_point: /part1
+  - name: part2
+    number: 2
+    size: 5120
+    fstype: ext4
+    mount_point: /part2

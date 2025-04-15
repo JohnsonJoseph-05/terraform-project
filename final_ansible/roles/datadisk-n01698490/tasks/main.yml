@@ -1,0 +1,31 @@
+- name: Create partitions on {{ data_disk_device }}
+  parted:
+    device: "{{ data_disk_device }}"
+    number: "{{ item.number }}"
+    state: present
+    part_type: primary
+    unit: MiB
+    resize: yes
+    part_start: "{{ (item.number - 1) * 4096 + 1 }}MiB"
+    part_end: "{{ item.number * 4096 }}MiB"  # Rough offset for simplicity
+  loop: "{{ partitions }}"
+
+- name: Create filesystem on each partition
+  filesystem:
+    fstype: "{{ item.fstype }}"
+    dev: "{{ data_disk_device }}{{ item.number }}"
+  loop: "{{ partitions }}"
+
+- name: Create mount points
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+  loop: "{{ partitions }}"
+
+- name: Mount the partitions persistently
+  mount:
+    path: "{{ item.mount_point }}"
+    src: "{{ data_disk_device }}{{ item.number }}"
+    fstype: "{{ item.fstype }}"
+    state: mounted
+  loop: "{{ partitions }}"

@@ -1,0 +1,12 @@
+- name: Stop nginx if it's running (conflict with httpd)
+  service:
+    name: nginx
+    state: stopped
+  ignore_errors: yes
+
+- name: Disable nginx at boot
+  service:
+    name: nginx
+    enabled: no
+  ignore_errors: yes
+

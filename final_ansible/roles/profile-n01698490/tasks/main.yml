@@ -1,0 +1,8 @@
+- name: Ensure the TMOUT setting block exists in /etc/profile
+  blockinfile:
+    path: /etc/profile
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: TMOUT for n01698490"
+    block: |
+      # Test block added by Ansible……n01698490
+      export TMOUT=1500
+  become: true
